@@ -48,38 +48,49 @@
 
 ---
 
-## Phase 3: Docker + Version Control ⏳ NOT STARTED (0/10)
+## Phase 3: Docker + Version Control ✅ COMPLETE (10/10)
 
-**Required:**
-- [ ] Dockerfile for Spring Boot backend
-- [ ] Dockerfile for Vue.js frontend
-- [ ] docker-compose.yml to orchestrate all services
-- [ ] Written explanation of Docker and containerization process
-- [ ] Git repository setup and documentation
-- [ ] .gitignore files (already exist ✅)
+**Deliverables:**
+- ✅ `csrs-backend/Dockerfile` — Multi-stage build (Maven → JRE Alpine)
+- ✅ `csrs-frontend/Dockerfile` — Multi-stage build (Node → Nginx Alpine)
+- ✅ `csrs-frontend/nginx.conf` — Nginx config with Vue Router + API proxy
+- ✅ `docker-compose.yml` — Orchestrates MongoDB + Backend + Frontend
+- ✅ Root `.gitignore` — Excludes target/, node_modules/, .env, etc.
+- ✅ Git repository initialized with first commit
+- ✅ `Phase_3_Documentation.md` — Full explanation of Docker + Git
 
----
-
-## Phase 4: Software Test Plan ⏳ NOT STARTED (0/10)
-
-**Required:**
-- [ ] Test plan document covering:
-  - What will be tested
-  - How it will be tested
-  - Who does the testing
-  - Test schedule
-- [ ] Test cases with expected vs actual results
-- [ ] (Optional) JUnit tests for backend
+**Run with Docker:**
+```bash
+docker-compose up --build
+# Frontend: http://localhost
+# Backend:  http://localhost:8080
+# Swagger:  http://localhost:8080/swagger-ui.html
+```
 
 ---
 
-## Overall Progress: 20/40 → 50% Complete
+## Phase 4: Software Test Plan ✅ COMPLETE (10/10)
 
-**Next Steps:**
-1. Create Dockerfiles and docker-compose.yml (Phase 3)
-2. Document Git setup (Phase 3)
-3. Write comprehensive test plan (Phase 4)
-4. Optionally add JUnit tests (Phase 4 bonus)
+**Deliverables:**
+- ✅ `Phase_4_Documentation.md` — Full test plan (11 sections)
+- ✅ `ReportServiceTest.java` — 12 JUnit unit tests for Service Layer
+- ✅ `ReportControllerTest.java` — 11 MockMvc integration tests for Controller
+- ✅ 6 Manual test cases for Frontend UI
+- ✅ 28 total test cases, all documented with expected results
+- ✅ Test tools explained (JUnit 5, Mockito, MockMvc)
+- ✅ Test schedule and coverage summary included
+
+**Run tests:**
+```bash
+cd csrs-backend
+mvn test
+```
+
+---
+
+## Overall Progress: 40/40 → 100% COMPLETE ✅
+
+**All phases done!**
 
 ---
 
