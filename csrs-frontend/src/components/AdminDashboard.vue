@@ -48,6 +48,11 @@
 <script>
 import axios from 'axios';
 
+// Use environment variable for API base URL
+// In development: proxied through Vite (localhost:8080)
+// In production: points directly to Render backend
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export default {
   name: 'AdminDashboard',
   data() {
@@ -69,7 +74,7 @@ export default {
     async fetchReports() {
       this.loading = true;
       try {
-        const response = await axios.get('/api/reports');
+        const response = await axios.get(`${API_BASE}/api/reports`);
         this.reports = response.data;
       } catch (error) {
         console.error('Error fetching reports:', error);
@@ -79,7 +84,7 @@ export default {
     },
     async updateStatus(id, newStatus) {
       try {
-        await axios.patch(`/api/reports/${id}/status?status=${newStatus}`);
+        await axios.patch(`${API_BASE}/api/reports/${id}/status?status=${newStatus}`);
         // Optionally show a toast notification here
       } catch (error) {
         console.error('Error updating status:', error);

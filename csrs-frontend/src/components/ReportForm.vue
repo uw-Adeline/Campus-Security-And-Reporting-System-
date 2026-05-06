@@ -65,6 +65,11 @@
 <script>
 import axios from 'axios';
 
+// Use environment variable for API base URL
+// In development: proxied through Vite (localhost:8080)
+// In production: points directly to Render backend
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export default {
   name: 'ReportForm',
   data() {
@@ -89,7 +94,7 @@ export default {
       this.errorMessage = '';
       
       try {
-        const response = await axios.post('/api/reports', this.form);
+        const response = await axios.post(`${API_BASE}/api/reports`, this.form);
         if (response.status === 201) {
           this.successMessage = 'Report submitted successfully. Thank you for keeping AUCA safe.';
           // Reset form

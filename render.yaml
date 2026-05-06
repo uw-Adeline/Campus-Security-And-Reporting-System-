@@ -1,0 +1,11 @@
+services:
+  # Spring Boot Backend Service
+  - type: web
+    name: auca-csrs-backend
+    runtime: docker
+    dockerfilePath: ./csrs-backend/Dockerfile
+    dockerContext: ./csrs-backend
+    plan: free
+    envVars:
+      - key: SPRING_DATA_MONGODB_URI
+        sync: false  # You will set this manually in Render dashboard

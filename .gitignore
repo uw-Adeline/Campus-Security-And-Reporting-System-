@@ -21,8 +21,9 @@ csrs-frontend/dist-ssr/
 # ========================
 .env
 .env.local
-.env.production
-*.env
+.env.development.local
+.env.production.local
+*.env.local
 
 # ========================
 # IDE FILES
