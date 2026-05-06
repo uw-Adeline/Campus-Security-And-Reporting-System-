@@ -1,0 +1,51 @@
+# ========================
+# JAVA / MAVEN (Backend)
+# ========================
+csrs-backend/target/
+csrs-backend/.mvn/
+*.class
+*.jar
+*.war
+*.ear
+
+# ========================
+# NODE / VUE (Frontend)
+# ========================
+csrs-frontend/node_modules/
+csrs-frontend/dist/
+csrs-frontend/dist-ssr/
+*.local
+
+# ========================
+# ENVIRONMENT & SECRETS
+# ========================
+.env
+.env.local
+.env.production
+*.env
+
+# ========================
+# IDE FILES
+# ========================
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+
+# ========================
+# OS FILES
+# ========================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ========================
+# LOGS
+# ========================
+*.log
+logs/
+npm-debug.log*

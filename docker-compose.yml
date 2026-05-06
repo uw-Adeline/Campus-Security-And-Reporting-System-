@@ -1,0 +1,90 @@
+version: "3.9"
+
+# ============================================================
+# AUCA CSRS - Docker Compose Configuration
+# This file orchestrates all 3 services of the application:
+#   1. mongodb  - The database
+#   2. backend  - Spring Boot REST API
+#   3. frontend - Vue.js app served by Nginx
+#
+# Run everything with: docker-compose up --build
+# Stop everything with: docker-compose down
+# ============================================================
+
+services:
+
+  # ----------------------------------------------------------
+  # SERVICE 1: MongoDB Database
+  # Uses the official MongoDB image from Docker Hub
+  # ----------------------------------------------------------
+  mongodb:
+    image: mongo:7.0
+    container_name: csrs-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: csrs_db
+    ports:
+      - "27017:27017"       # Expose MongoDB port to host (optional, for debugging)
+    volumes:
+      - mongodb_data:/data/db   # Persist data even when container restarts
+    networks:
+      - csrs-network
+
+  # ----------------------------------------------------------
+  # SERVICE 2: Spring Boot Backend
+  # Builds from the Dockerfile in csrs-backend/
+  # Waits for MongoDB to be ready before starting
+  # ----------------------------------------------------------
+  backend:
+    build:
+      context: ./csrs-backend
+      dockerfile: Dockerfile
+    container_name: csrs-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"         # Map host port 8080 to container port 8080
+    environment:
+      # Override application.properties to use the local MongoDB container
+      # "mongodb" here refers to the service name above (Docker DNS)
+      SPRING_DATA_MONGODB_URI: mongodb://admin:admin123@mongodb:27017/csrs_db?authSource=admin
+    depends_on:
+      - mongodb             # Don't start backend until MongoDB is running
+    networks:
+      - csrs-network
+
+  # ----------------------------------------------------------
+  # SERVICE 3: Vue.js Frontend (served by Nginx)
+  # Builds from the Dockerfile in csrs-frontend/
+  # Waits for backend to be ready before starting
+  # ----------------------------------------------------------
+  frontend:
+    build:
+      context: ./csrs-frontend
+      dockerfile: Dockerfile
+    container_name: csrs-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"             # App accessible at http://localhost (port 80)
+    depends_on:
+      - backend             # Don't start frontend until backend is running
+    networks:
+      - csrs-network
+
+# ----------------------------------------------------------
+# NETWORKS
+# All services share this network so they can talk to each other
+# by service name (e.g., backend calls "mongodb:27017")
+# ----------------------------------------------------------
+networks:
+  csrs-network:
+    driver: bridge
+
+# ----------------------------------------------------------
+# VOLUMES
+# Named volume to persist MongoDB data between container restarts
+# ----------------------------------------------------------
+volumes:
+  mongodb_data:
+    driver: local
