@@ -8,4 +8,4 @@ services:
     plan: free
     envVars:
       - key: SPRING_DATA_MONGODB_URI
-        sync: false  # You will set this manually in Render dashboard
+        value: mongodb+srv://uwiadeline389_db_user:Kiki%40%23123@cluster0.zgblg86.mongodb.net/csrs_db?retryWrites=true&w=majority&appName=Cluster0
