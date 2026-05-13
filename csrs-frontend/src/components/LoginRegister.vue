@@ -85,12 +85,19 @@
         </div>
       </form>
 
-      <!-- Demo accounts hint -->
-      <div style="margin-top: 1.5rem; padding: 1rem; background: #F0F9FF; border-radius: 8px; font-size: 0.8rem; color: var(--gray);">
-        <strong style="color: var(--dark);">Demo Accounts:</strong><br/>
-        Student: student@auca.ac.rw / password123<br/>
-        Lecturer: lecturer@auca.ac.rw / password123<br/>
-        Admin: admin@auca.ac.rw / password123
+      <!-- Demo accounts hint - collapsible -->
+      <div style="margin-top: 1.5rem;">
+        <button
+          @click="showDemo = !showDemo"
+          style="width: 100%; padding: 0.6rem; background: #F0F9FF; border: 1px dashed #BAE6FD; border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: #0369A1; font-weight: 500;">
+          {{ showDemo ? '🔼 Hide Demo Accounts' : '🔽 Show Demo Accounts' }}
+        </button>
+        <div v-if="showDemo" style="margin-top: 0.5rem; padding: 1rem; background: #F0F9FF; border-radius: 8px; font-size: 0.8rem; color: var(--gray); border: 1px solid #BAE6FD;">
+          <strong style="color: var(--dark);">Demo Accounts:</strong><br/><br/>
+          🎓 <strong>Student:</strong> student@auca.ac.rw / password123<br/>
+          📚 <strong>Lecturer:</strong> lecturer@auca.ac.rw / password123<br/>
+          🔐 <strong>Admin:</strong> admin@auca.ac.rw / password123
+        </div>
       </div>
     </div>
   </div>
@@ -103,6 +110,7 @@ export default {
   data() {
     return {
       mode: 'login',
+      showDemo: false,
       loginForm: { email: '', password: '', role: '' },
       registerForm: { name: '', email: '', password: '', role: '' },
       errorMsg: '',
