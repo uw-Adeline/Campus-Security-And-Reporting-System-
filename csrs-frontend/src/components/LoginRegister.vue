@@ -70,6 +70,16 @@
           <input type="password" v-model="registerForm.password" required placeholder="Create a password" />
         </div>
         <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" v-model="registerForm.confirmPassword" required placeholder="Repeat your password" />
+          <p v-if="passwordMismatch" style="color: #DC2626; font-size: 0.8rem; margin-top: 0.4rem;">
+            ❌ Passwords do not match
+          </p>
+          <p v-if="registerForm.confirmPassword && !passwordMismatch" style="color: #059669; font-size: 0.8rem; margin-top: 0.4rem;">
+            ✅ Passwords match
+          </p>
+        </div>
+        <div class="form-group">
           <label>Register As</label>
           <select v-model="registerForm.role" required>
             <option value="" disabled>Select your role</option>
@@ -112,15 +122,20 @@ export default {
       mode: 'login',
       showDemo: false,
       loginForm: { email: '', password: '', role: '' },
-      registerForm: { name: '', email: '', password: '', role: '' },
+      registerForm: { name: '', email: '', password: '', confirmPassword: '', role: '' },
       errorMsg: '',
       successMsg: '',
-      // Demo accounts (simulated - no real auth backend needed)
       accounts: [
         { id: 'student-001', name: 'Alice Uwimana', email: 'student@auca.ac.rw', password: 'password123', role: 'student' },
         { id: 'lecturer-001', name: 'Dr. Jean Bosco', email: 'lecturer@auca.ac.rw', password: 'password123', role: 'lecturer' },
         { id: 'admin-001', name: 'Security Admin', email: 'admin@auca.ac.rw', password: 'password123', role: 'admin' }
       ]
+    }
+  },
+  computed: {
+    passwordMismatch() {
+      return this.registerForm.confirmPassword &&
+             this.registerForm.password !== this.registerForm.confirmPassword
     }
   },
   methods: {
@@ -139,7 +154,9 @@ export default {
     },
     handleRegister() {
       this.successMsg = ''
-      // Add new account to local list
+      if (this.registerForm.password !== this.registerForm.confirmPassword) {
+        return // blocked — UI already shows the mismatch error
+      }
       const newUser = {
         id: 'user-' + Date.now(),
         name: this.registerForm.name,
@@ -149,7 +166,7 @@ export default {
       }
       this.accounts.push(newUser)
       this.successMsg = 'Account created! You can now login.'
-      this.registerForm = { name: '', email: '', password: '', role: '' }
+      this.registerForm = { name: '', email: '', password: '', confirmPassword: '', role: '' }
       setTimeout(() => { this.mode = 'login' }, 1500)
     }
   }
