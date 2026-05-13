@@ -72,6 +72,7 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
 
 export default {
   name: 'ReportForm',
+  props: ['studentId'],
   data() {
     return {
       form: {
@@ -80,7 +81,8 @@ export default {
         location: '',
         priorityLevel: 'MEDIUM',
         description: '',
-        isAnonymous: true
+        isAnonymous: true,
+        studentID: ''
       },
       isSubmitting: false,
       successMessage: '',
@@ -92,14 +94,17 @@ export default {
       this.isSubmitting = true;
       this.successMessage = '';
       this.errorMessage = '';
-      
+      // Attach studentId if not anonymous
+      if (!this.form.isAnonymous) {
+        this.form.studentID = this.studentId || '';
+      }
       try {
         const response = await axios.post(`${API_BASE}/api/reports`, this.form);
         if (response.status === 201) {
           this.successMessage = 'Report submitted successfully. Thank you for keeping AUCA safe.';
           // Reset form
           this.form = {
-            title: '', category: '', location: '', priorityLevel: 'MEDIUM', description: '', isAnonymous: true
+            title: '', category: '', location: '', priorityLevel: 'MEDIUM', description: '', isAnonymous: true, studentID: ''
           };
         }
       } catch (error) {
