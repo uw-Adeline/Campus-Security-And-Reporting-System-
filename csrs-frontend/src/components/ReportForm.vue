@@ -94,10 +94,9 @@ export default {
       this.isSubmitting = true;
       this.successMessage = '';
       this.errorMessage = '';
-      // Attach studentId if not anonymous
-      if (!this.form.isAnonymous) {
-        this.form.studentID = this.studentId || '';
-      }
+      // Always save studentID so student can track their own reports
+      // isAnonymous only hides identity from admin, not from tracking
+      this.form.studentID = this.studentId || '';
       try {
         const response = await axios.post(`${API_BASE}/api/reports`, this.form);
         if (response.status === 201) {

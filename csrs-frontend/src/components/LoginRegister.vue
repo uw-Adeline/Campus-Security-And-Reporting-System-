@@ -44,7 +44,7 @@
             <option value="" disabled>Select your role</option>
             <option value="student">Student</option>
             <option value="lecturer">Lecturer</option>
-            <option value="admin">Admin / Security</option>
+            <option value="admin">Admin</option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
@@ -128,7 +128,7 @@ export default {
       accounts: [
         { id: 'student-001', name: 'Alice Uwimana', email: 'student@auca.ac.rw', password: 'password123', role: 'student' },
         { id: 'lecturer-001', name: 'Dr. Jean Bosco', email: 'lecturer@auca.ac.rw', password: 'password123', role: 'lecturer' },
-        { id: 'admin-001', name: 'Security Admin', email: 'admin@auca.ac.rw', password: 'password123', role: 'admin' }
+        { id: 'admin-001', name: 'Admin', email: 'admin@auca.ac.rw', password: 'password123', role: 'admin' }
       ]
     }
   },
